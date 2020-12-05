@@ -1,0 +1,17 @@
+.show-for-large {
+    display: flex !important;
+}
+
+.show-for-medium {
+    display: none !important;
+}
+
+@media only screen and (max-width: 621px) {
+    .show-for-large {
+        display: none !important;
+    }
+
+    .show-for-medium {
+        display: flex !important;
+    }
+}
