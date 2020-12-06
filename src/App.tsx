@@ -1,6 +1,6 @@
 import React, { useEffect, MutableRefObject, useRef, Dispatch, SetStateAction, useState, MouseEvent } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
-import { Header, Label } from 'semantic-ui-react';
+import { Header, Label, Message } from 'semantic-ui-react';
 import './App.css';
 import TopNav from './ui/TopNav';
 import BottomNav from './ui/BottomNav';
@@ -16,6 +16,7 @@ let buttomSection: MutableRefObject<HTMLDivElement | null>;
 
 let [containerHeight, setContainerHeight]: [number | null, Dispatch<SetStateAction<number>> | null] = [null, null];
 let [array, setArray]: [Array<number> | null, Dispatch<SetStateAction<Array<number>>> | null] = [null, null];
+let [showMessage, setShowMessage]: [boolean | null, Dispatch<SetStateAction<boolean>> | null] = [null, null];
 
 let n = 0;
 let _i = -1;
@@ -38,6 +39,7 @@ function App() {
 
   [containerHeight, setContainerHeight] = useState(0);
   [array, setArray] = useState([0]);
+  [showMessage, setShowMessage] = useState(false as boolean);
 
   useEffect(() => {
     sliderValue();
@@ -53,7 +55,9 @@ function App() {
 
   return (
     <div>
-      <TopNav>{{ topNav: topNav, generateNewArray: generateArrayOnClick }}</TopNav>
+      <TopNav>
+        {{ topNav: topNav, generateNewArray: generateArrayOnClick, sortArray: sortArray }}
+      </TopNav>
       <Container className='container'
         style={{ height: containerHeight }}
         ref={container}
@@ -96,6 +100,25 @@ function App() {
           <Header textAlign='center' block>
             <Label color='grey' size='large'>Loading .....</Label>
           </Header>
+        </div>
+      </div>
+
+      <div aria-live="polite" aria-atomic="true"
+        style={{
+          position: 'relative',
+          display: showMessage ? 'block' : 'none'
+        }}
+      >
+        <div style={{ position: 'absolute', bottom: 0, right: 0 }}>
+          {
+            (showMessage)
+          }
+          <Message negative compact style={{ width: '305px' }}
+            onDismiss={() => setShowMessage!!(false)}
+          >
+            <Message.Header>Sorting Visualizer</Message.Header>
+            <p>Please Select a Sorting Algorithm.</p>
+          </Message>
         </div>
       </div>
     </div>
@@ -211,6 +234,35 @@ const show = (element: HTMLElement) => {
 
 const hide = (element: HTMLElement) => {
   element.classList.add('hide');
+}
+
+const sortArray = (e: MouseEvent, key: string) => {
+  e.preventDefault();
+  switch (key) {
+    case 'bubble_sort':
+      alert('implement bubble sort');
+      break;
+    case 'insertion_sort':
+      alert('implement inserstion sort');
+      break;
+    case 'selection_sort':
+      alert('implement selection sort');
+      break;
+    case 'shell_sort':
+      alert('implement shell sort');
+      break;
+    case 'merge_sort':
+      alert('implement merge sort');
+      break;
+    case 'quck_sort':
+      alert('implement quck sort');
+      break;
+    default:
+      setShowMessage!!(true);
+      setTimeout(() => {
+        setShowMessage!!(false)
+      }, 3000);
+  }
 }
 
 export default App;
