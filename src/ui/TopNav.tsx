@@ -1,4 +1,4 @@
-import React, { RefObject, MouseEvent, Dispatch, SetStateAction, useState, ChangeEvent } from 'react';
+import React, { RefObject, MouseEvent, useState, ChangeEvent } from 'react';
 import { Menu } from 'semantic-ui-react';
 import Nav from './Nav';
 import './TopNav.css';
@@ -11,16 +11,18 @@ type Props = {
     sortArray: (e: MouseEvent, p: string) => void
   }
 }
-
-let [value, setValue]: [string | null, Dispatch<SetStateAction<string>> | null] = [null, null];
 // Select sorting algorithm
 
 function TopNav(props: Props) {
-  [value, setValue] = useState('')
+  const [value, setValue] = useState('')
 
   const { topNav, generateNewArray, sortArray } = props.children;
   const options = [];
   const comparisonSort = comparisonSortingAlgorithmOptions();
+
+  const getAndSetValue = (e: ChangeEvent<HTMLSelectElement>) => {
+    setValue!!(e.target.value);
+  }
 
   for (let i = 0; i < comparisonSort.length; i++) {
     const _comparisonSort = comparisonSortingAlgorithmOptions()[i];
@@ -57,10 +59,6 @@ function TopNav(props: Props) {
       </Menu.Item>
     </div>
   );
-}
-
-const getAndSetValue = (e: ChangeEvent<HTMLSelectElement>) => {
-  setValue!!(e.target.value);
 }
 
 export default TopNav;

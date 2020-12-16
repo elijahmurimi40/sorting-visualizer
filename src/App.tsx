@@ -19,7 +19,8 @@ let [array, setArray]: [Array<number> | null, Dispatch<SetStateAction<Array<numb
 let [showMessage, setShowMessage]: [boolean | null, Dispatch<SetStateAction<boolean>> | null] = [null, null];
 
 let n = 0;
-let _i = -1;
+// let _i = -1;
+let isArrayBeingGenerated = false
 let current_width: number;
 let _holderDivWidth = 0;
 let barHeight = 0;
@@ -195,13 +196,15 @@ const calculateAndSetDimension = () => {
   n = Math.floor(_holderDivWidth / (current_width + minWidth));
   // n += 2;
   // -i = 0;
-  _i = 0;
+  // _i = 0;
+  isArrayBeingGenerated = true
   generateArray(n);
 }
 
 const generateArrayOnClick = (e: MouseEvent) => {
   e.preventDefault();
-  if (_i === -1) generateArray(n);
+  if (!isArrayBeingGenerated) generateArray(n)
+  // if (_i === -1) generateArray(n);
 }
 
 // const timer = (ms: number) => new Promise(res => setTimeout(res, ms))
@@ -211,7 +214,8 @@ const generateArray = async (size: number) => {
   const _array: Array<number> = [];
 
   for (let i = 0; i < size; i++) {
-    _i = i;
+    // _i = i;
+    isArrayBeingGenerated = true
     if (size !== n) { break };
     _array.push(randomIntFromInterval(5, barHeight));
     // await timer(1000);
@@ -220,7 +224,8 @@ const generateArray = async (size: number) => {
   if (size === n) {
     setArray!!(_array);
     hide(loadingIndicator.current!!);
-    _i = -1;
+    // _i = -1;
+    isArrayBeingGenerated = false
   }
 }
 
