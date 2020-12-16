@@ -1,22 +1,9 @@
-import React, { useEffect, MutableRefObject, useRef, Dispatch, SetStateAction, useState, MouseEvent } from 'react';
+import React, { useEffect, useRef, useState, MouseEvent } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import { Header, Label, Message } from 'semantic-ui-react';
 import './App.css';
 import TopNav from './ui/TopNav';
 import BottomNav from './ui/BottomNav';
-
-let topNav: MutableRefObject<HTMLDivElement | null>;
-let bottomNav: MutableRefObject<HTMLDivElement | null>;
-let container: MutableRefObject<HTMLDivElement | null>;
-let loadingIndicator: MutableRefObject<HTMLDivElement | null>;
-let holderDiv: MutableRefObject<HTMLDivElement | null>;
-let slider: MutableRefObject<HTMLInputElement | null>;
-let barValue: MutableRefObject<HTMLSpanElement | null>;
-let buttomSection: MutableRefObject<HTMLDivElement | null>;
-
-let [containerHeight, setContainerHeight]: [number | null, Dispatch<SetStateAction<number>> | null] = [null, null];
-let [array, setArray]: [Array<number> | null, Dispatch<SetStateAction<Array<number>>> | null] = [null, null];
-let [showMessage, setShowMessage]: [boolean | null, Dispatch<SetStateAction<boolean>> | null] = [null, null];
 
 let n = 0;
 // let _i = -1;
@@ -29,28 +16,142 @@ const minWidth = 2;
 const maxWidth = 50;
 
 function App() {
-  topNav = useRef<HTMLDivElement>(null);
-  bottomNav = useRef<HTMLDivElement>(null);
-  container = useRef<HTMLDivElement>(null);
-  loadingIndicator = useRef<HTMLDivElement>(null);
-  holderDiv = useRef<HTMLDivElement>(null);
-  slider = useRef<HTMLInputElement>(null);
-  barValue = useRef<HTMLSpanElement>(null);
-  buttomSection = useRef<HTMLDivElement>(null);
+  const topNav = useRef<HTMLDivElement>(null);
+  const bottomNav = useRef<HTMLDivElement>(null);
+  const container = useRef<HTMLDivElement>(null);
+  const loadingIndicator = useRef<HTMLDivElement>(null);
+  const holderDiv = useRef<HTMLDivElement>(null);
+  const slider = useRef<HTMLInputElement>(null);
+  const barValue = useRef<HTMLSpanElement>(null);
+  const buttomSection = useRef<HTMLDivElement>(null);
+  const sliderValue = useRef(() => {})
+  const calculateAndSetDimension = useRef(() => {})
 
-  [containerHeight, setContainerHeight] = useState(0);
-  [array, setArray] = useState([0]);
-  [showMessage, setShowMessage] = useState(false as boolean);
+  const [containerHeight, setContainerHeight] = useState(0);
+  const [array, setArray] = useState([0]);
+  const [showMessage, setShowMessage] = useState(false as boolean);
+
+  const topNavHeight = () => {
+    return topNav.current!!.clientHeight;
+  }
+
+  const bottomNavHeight = () => {
+    return bottomNav.current!!.clientHeight;
+  }
+
+  const containerTopMargin = () => {
+    return container.current!!.offsetTop;
+  }
+
+  const holderDivWidth = () => {
+    return holderDiv.current!!.clientWidth;
+  }
+
+  const buttomSectionHeight = () => {
+    return buttomSection.current!!.clientHeight;
+  }
+
+  const generateArray = async (size: number) => {
+    show(loadingIndicator.current!!);
+    const _array: Array<number> = [];
+
+    for (let i = 0; i < size; i++) {
+      // _i = i;
+      isArrayBeingGenerated = true
+      if (size !== n) { break };
+      _array.push(randomIntFromInterval(5, barHeight));
+      // await timer(1000);
+    }
+
+    if (size === n) {
+      setArray!!(_array);
+      hide(loadingIndicator.current!!);
+      // _i = -1;
+      isArrayBeingGenerated = false
+    }
+  }
+
+  const generateArrayOnClick = (e: MouseEvent) => {
+    e.preventDefault();
+    if (!isArrayBeingGenerated) generateArray(n)
+    // if (_i === -1) generateArray(n);
+  }
+
+  sliderValue.current = () => {
+    const _slider = slider.current!!;
+    setCurrentWidth(_slider);
+    _slider.oninput = () => {
+      setCurrentWidth(_slider);
+      n = Math.floor(_holderDivWidth / (current_width + minWidth));
+      // if(current_width === _slider.valueAsNumber) {
+      //   true;
+      // } else {
+      //   false;
+      // }
+      generateArray(n);
+    }
+  }
+
+  calculateAndSetDimension.current = () => {
+    const _windowHeight = window.innerHeight;
+    const _topNavHeight = topNavHeight();
+    const _bottomNavHeight = bottomNavHeight();
+    const _containerTopMargin = containerTopMargin();
+
+    const height = _windowHeight - _containerTopMargin - (_containerTopMargin - _topNavHeight) - _bottomNavHeight;
+
+    setContainerHeight!!(height);
+
+    _holderDivWidth = holderDivWidth();
+    const _buttomSectionHeight = buttomSectionHeight();
+    barHeight = height - _buttomSectionHeight - 10;
+
+    n = Math.floor(_holderDivWidth / (current_width + minWidth));
+    // n += 2;
+    // -i = 0;
+    // _i = 0;
+    isArrayBeingGenerated = true
+    generateArray(n);
+  }
+
+  const sortArray = (e: MouseEvent, key: string) => {
+    e.preventDefault();
+    switch (key) {
+      case 'bubble_sort':
+        alert('implement bubble sort');
+        break;
+      case 'insertion_sort':
+        alert('implement inserstion sort');
+        break;
+      case 'selection_sort':
+        alert('implement selection sort');
+        break;
+      case 'shell_sort':
+        alert('implement shell sort');
+        break;
+      case 'merge_sort':
+        alert('implement merge sort');
+        break;
+      case 'quck_sort':
+        alert('implement quck sort');
+        break;
+      default:
+        setShowMessage!!(true);
+        setTimeout(() => {
+          setShowMessage!!(false)
+        }, 3000);
+    }
+  }
 
   useEffect(() => {
-    sliderValue();
-    calculateAndSetDimension();
+    sliderValue.current();
+    calculateAndSetDimension.current();
     // effect
-    window.addEventListener('resize', debounce(calculateAndSetDimension));
+    window.addEventListener('resize', debounce(calculateAndSetDimension.current));
 
     return () => {
       // cleanup
-      window.removeEventListener('resize', debounce(calculateAndSetDimension));
+      window.removeEventListener('resize', debounce(calculateAndSetDimension.current));
     }
   }, []);
 
@@ -126,26 +227,6 @@ function App() {
   );
 }
 
-const topNavHeight = () => {
-  return topNav.current!!.clientHeight;
-}
-
-const bottomNavHeight = () => {
-  return bottomNav.current!!.clientHeight;
-}
-
-const containerTopMargin = () => {
-  return container.current!!.offsetTop;
-}
-
-const holderDivWidth = () => {
-  return holderDiv.current!!.clientWidth;
-}
-
-const buttomSectionHeight = () => {
-  return buttomSection.current!!.clientHeight;
-}
-
 const setCurrentWidth = (_slider: HTMLInputElement) => {
   if (_slider.valueAsNumber % 2 === 0) {
     current_width = (maxWidth - _slider.valueAsNumber) + minWidth;
@@ -156,21 +237,6 @@ const hideShowValue = (value: number) => {
   return current_width >= 40 ? value : '';
 }
 
-const sliderValue = () => {
-  const _slider = slider.current!!;
-  setCurrentWidth(_slider);
-  _slider.oninput = () => {
-    setCurrentWidth(_slider);
-    n = Math.floor(_holderDivWidth / (current_width + minWidth));
-    // if(current_width === _slider.valueAsNumber) {
-    //   true;
-    // } else {
-    //   false;
-    // }
-    generateArray(n);
-  }
-}
-
 const debounce = (callBack: () => void, time: number = 305) => {
   let timer: number = 0;
   return () => {
@@ -179,55 +245,7 @@ const debounce = (callBack: () => void, time: number = 305) => {
   }
 }
 
-const calculateAndSetDimension = () => {
-  const _windowHeight = window.innerHeight;
-  const _topNavHeight = topNavHeight();
-  const _bottomNavHeight = bottomNavHeight();
-  const _containerTopMargin = containerTopMargin();
-
-  const height = _windowHeight - _containerTopMargin - (_containerTopMargin - _topNavHeight) - _bottomNavHeight;
-
-  setContainerHeight!!(height);
-
-  _holderDivWidth = holderDivWidth();
-  const _buttomSectionHeight = buttomSectionHeight();
-  barHeight = height - _buttomSectionHeight - 10;
-
-  n = Math.floor(_holderDivWidth / (current_width + minWidth));
-  // n += 2;
-  // -i = 0;
-  // _i = 0;
-  isArrayBeingGenerated = true
-  generateArray(n);
-}
-
-const generateArrayOnClick = (e: MouseEvent) => {
-  e.preventDefault();
-  if (!isArrayBeingGenerated) generateArray(n)
-  // if (_i === -1) generateArray(n);
-}
-
 // const timer = (ms: number) => new Promise(res => setTimeout(res, ms))
-
-const generateArray = async (size: number) => {
-  show(loadingIndicator.current!!);
-  const _array: Array<number> = [];
-
-  for (let i = 0; i < size; i++) {
-    // _i = i;
-    isArrayBeingGenerated = true
-    if (size !== n) { break };
-    _array.push(randomIntFromInterval(5, barHeight));
-    // await timer(1000);
-  }
-
-  if (size === n) {
-    setArray!!(_array);
-    hide(loadingIndicator.current!!);
-    // _i = -1;
-    isArrayBeingGenerated = false
-  }
-}
 
 const randomIntFromInterval = (min: number, max: number) => {
   return Math.floor(Math.random() * (max - min + 1) + min);
@@ -239,35 +257,6 @@ const show = (element: HTMLElement) => {
 
 const hide = (element: HTMLElement) => {
   element.classList.add('hide');
-}
-
-const sortArray = (e: MouseEvent, key: string) => {
-  e.preventDefault();
-  switch (key) {
-    case 'bubble_sort':
-      alert('implement bubble sort');
-      break;
-    case 'insertion_sort':
-      alert('implement inserstion sort');
-      break;
-    case 'selection_sort':
-      alert('implement selection sort');
-      break;
-    case 'shell_sort':
-      alert('implement shell sort');
-      break;
-    case 'merge_sort':
-      alert('implement merge sort');
-      break;
-    case 'quck_sort':
-      alert('implement quck sort');
-      break;
-    default:
-      setShowMessage!!(true);
-      setTimeout(() => {
-        setShowMessage!!(false)
-      }, 3000);
-  }
 }
 
 export default App;
