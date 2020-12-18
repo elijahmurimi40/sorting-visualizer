@@ -11,6 +11,7 @@ let isArrayBeingGenerated = false
 let current_width: number;
 let _holderDivWidth = 0;
 let barHeight = 0;
+let debounceTimer: number = 0;
 
 const minWidth = 2;
 const maxWidth = 50;
@@ -73,6 +74,8 @@ function App() {
     }
   }
 
+  const generateArray2 = (size: number) => {}
+
   const generateArrayOnClick = (e: MouseEvent) => {
     e.preventDefault();
     if (!isArrayBeingGenerated) generateArray(n)
@@ -114,6 +117,7 @@ function App() {
     // _i = 0;
     isArrayBeingGenerated = true
     generateArray(n);
+    clearTimeout(debounceTimer);
   }
 
   const sortArray = (e: MouseEvent, key: string) => {
@@ -139,8 +143,9 @@ function App() {
         break;
       default:
         setShowMessage!!(true);
-        setTimeout(() => {
+        const timer = setTimeout(() => {
           setShowMessage!!(false)
+          clearTimeout(timer);
         }, 3000);
     }
   }
@@ -245,10 +250,10 @@ const hideShowValue = (value: number) => {
 }
 
 const debounce = (callBack: () => void, time: number = 305) => {
-  let timer: number = 0;
+  debounceTimer = 0;
   return () => {
-    if (timer) clearTimeout(timer);
-    timer = window.setTimeout(callBack, time);
+    if (debounceTimer ) clearTimeout(debounceTimer);
+    debounceTimer  = window.setTimeout(callBack, time);
   }
 }
 

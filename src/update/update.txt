@@ -1,2 +1,3 @@
 --- async function
 --- variable naming
+--- update to removie setTimeOut in componentDidUnMount
