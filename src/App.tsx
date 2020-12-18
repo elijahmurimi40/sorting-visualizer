@@ -22,10 +22,12 @@ function App() {
   const loadingIndicator = useRef<HTMLDivElement>(null);
   const holderDiv = useRef<HTMLDivElement>(null);
   const slider = useRef<HTMLInputElement>(null);
-  const barValue = useRef<HTMLSpanElement>(null);
+  const barValue = useRef<Array<HTMLSpanElement>>([]);
   const buttomSection = useRef<HTMLDivElement>(null);
-  const sliderValue = useRef(() => {})
-  const calculateAndSetDimension = useRef(() => {})
+  const arrayBars = useRef<Array<HTMLDivElement>>([]);
+
+  const sliderValue = useRef(() => { });
+  const calculateAndSetDimension = useRef(() => { });
 
   const [containerHeight, setContainerHeight] = useState(0);
   const [array, setArray] = useState([0]);
@@ -174,10 +176,15 @@ function App() {
               {
                 array.map((value, idx) => (
                   <div
+                    // ref={(element) => arrayBar.current!!.push(element!!)}
+                    ref={(element: HTMLDivElement) => arrayBars.current[idx] = element}
                     style={{ width: current_width, height: `${value}px` }}
                     className='array-bar' key={idx}
                   >
-                    <span ref={barValue} className='span-value text-align'>{hideShowValue(value)}</span>
+                    <span ref={(element: HTMLSpanElement) => barValue.current[idx] = element}
+                      className='span-value text-align'>
+                      {hideShowValue(value)}
+                    </span>
                   </div>
                 ))
               }
