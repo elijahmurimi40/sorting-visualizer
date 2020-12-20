@@ -1,15 +1,33 @@
-export const bubbleSort = (array: Array<number>) => {
-  for (let i = 0; i < array.length; i++) {
-    for (let j = 0; j < array.length - i - 1; j++) {
-      const valueA = array[j];
-      const valueB = array[j + 1];
+import { MutableRefObject } from 'react';
+
+let arr: number[] = [];
+
+const swap = (positionA: number, positionB: number) => {
+  const temp = arr[positionA];
+  arr[positionA] = arr[positionB];
+  arr[positionB] = temp;
+};
+
+const bubbleSort = (
+  array: Array<number>,
+  barValues: MutableRefObject<HTMLSpanElement[]> | null = null,
+) => {
+  arr = array;
+  for (let i = 0; i < arr.length; i += 1) {
+    for (let j = 0; j < arr.length - i - 1; j += 1) {
+      const valueA = arr[j];
+      const valueB = arr[j + 1];
       const isValueAGreaterThanValueB = valueA > valueB;
-      if (isValueAGreaterThanValueB) {
-        const temp = valueA;
-        array[j] = valueB;
-        array[j + 1] = temp;
+      const isBarValuesNull = barValues === null;
+
+      if (isValueAGreaterThanValueB && isBarValuesNull) {
+        swap(j, j + 1);
+      } else if (!isBarValuesNull) {
+        swap(j, j + 1);
       }
     }
   }
-  return array;
-}
+  return arr;
+};
+
+export default bubbleSort;

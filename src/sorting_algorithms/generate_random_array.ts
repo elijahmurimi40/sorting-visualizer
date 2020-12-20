@@ -1,14 +1,15 @@
-export const generateRandomArray = () => {
+const randomNumber = (min: number, max: number) => Math.random() * (max - min + 1) + min;
+const randomIntFromInterval = (min: number, max: number) => Math.floor(randomNumber(min, max));
+
+const generateRandomArray = () => {
   const array: Array<number> = [];
   const size = randomIntFromInterval(1, 1000);
 
-  for (let i = 0; i < size; i++) {
+  for (let i = 0; i < size; i += 1) {
     array.push(randomIntFromInterval(-1000, 1000));
   }
 
   return array;
-}
+};
 
-const randomIntFromInterval = (min: number, max: number) => {
-  return Math.floor(Math.random() * (max - min + 1) + min);
-}
+export default generateRandomArray;
