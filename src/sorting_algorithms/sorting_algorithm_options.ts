@@ -5,7 +5,7 @@ const comparisonSortingAlgorithmOptions = () => {
     { key: 'selection_sort', text: 'Selection Sort', value: 'selection_sort' },
     { key: 'shell_sort', text: 'Shell Sort', value: 'shell_sort' },
     { key: 'merge_sort', text: 'Merge Sort', value: 'merge_sort' },
-    { key: 'quck_sort', text: 'Quck Sort', value: 'quck_sort' },
+    { key: 'quick_sort', text: 'Quick Sort', value: 'quick_sort' },
   ];
 
   return comparisonSortingAlgorithms;

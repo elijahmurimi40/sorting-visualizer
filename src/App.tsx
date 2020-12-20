@@ -167,8 +167,8 @@ function App() {
       case 'merge_sort':
         alert('implement merge sort');
         break;
-      case 'quck_sort':
-        alert('implement quck sort');
+      case 'quick_sort':
+        alert('implement quick sort');
         break;
       default:
         setShowMessage!!(true);

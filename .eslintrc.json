@@ -20,22 +20,40 @@
         "react",
         "@typescript-eslint",
         "jest",
-        "import"
+        "import",
+        "react-hooks"
     ],
     "rules": {
-        "react/jsx-filename-extension": [2, { "extensions": [".ts", ".tsx"] }],
+        "react/jsx-filename-extension": [
+            2,
+            {
+                "extensions": [
+                    ".ts",
+                    ".tsx"
+                ]
+            }
+        ],
         "no-use-before-define": "off",
         "import/no-unresolved": "error",
-        "import/extensions": ["error", "ignorePackages", {
-            "js": "never",
-            "jsx": "never",
-            "ts": "never",
-            "tsx": "never"
-        }]
+        "import/extensions": [
+            "error",
+            "ignorePackages",
+            {
+                "js": "never",
+                "jsx": "never",
+                "ts": "never",
+                "tsx": "never"
+            }
+        ],
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "warn"
     },
     "settings": {
         "import/parsers": {
-            "@typescript-eslint/parser": [".ts", ".tsx"]
+            "@typescript-eslint/parser": [
+                ".ts",
+                ".tsx"
+            ]
         },
         "import/resolver": {
             "typescript": {
