@@ -4,7 +4,7 @@ import React, {
 import { Menu } from 'semantic-ui-react';
 import Nav from './Nav';
 import './TopNav.css';
-import comparisonSortingAlgorithmOptions from '../sorting_algorithms/sorting_algorithm_options';
+import comparisonSortingAlgorithmOptions from '../sortingAlgorithms/sortingAlgorithmOptions';
 
 type Props = {
   children: {

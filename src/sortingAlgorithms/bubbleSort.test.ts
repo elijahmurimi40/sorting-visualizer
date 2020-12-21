@@ -1,5 +1,5 @@
-import bubbleSort from './bubble_sort';
-import generateRandomArray from './generate_random_array';
+import bubbleSort from './bubbleSort';
+import generateRandomArray from './generateRandomArray';
 
 for (let i = 0; i < 100; i += 1) {
   const array = generateRandomArray();
