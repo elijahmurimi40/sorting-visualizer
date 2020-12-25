@@ -12,7 +12,8 @@ type Props = {
     // eslint-disable-next-line no-unused-vars
     generateNewArray: (e: MouseEvent) => void,
     // eslint-disable-next-line no-unused-vars
-    sortArray: (e: MouseEvent, p: string) => void
+    sortArray: (e: MouseEvent, p: string) => void,
+    select: RefObject<HTMLSelectElement> | null
   }
 }
 // Select sorting algorithm
@@ -21,7 +22,9 @@ function TopNav(props: Props) {
   const [value, setValue] = useState('');
 
   const { children } = props;
-  const { topNav, generateNewArray, sortArray } = children;
+  const {
+    topNav, generateNewArray, sortArray, select,
+  } = children;
   // const { topNav, generateNewArray, sortArray } = props.children;
   const options = [];
   const comparisonSort = comparisonSortingAlgorithmOptions();
@@ -50,6 +53,7 @@ function TopNav(props: Props) {
           className='ui selection dropdown'
         > */}
         <select
+          ref={select}
           style={{ padding: '5px 5px' }}
           name="sorting_algorithms"
           className="ui selection fluid dropdown"
