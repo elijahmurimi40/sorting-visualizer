@@ -10,6 +10,7 @@ import { stopSortTimers } from './sortingAlgorithms/sortingTimers';
 import { Bar, ArrayBars } from './helperFunctions/ArrayBars';
 import barStates from './helperFunctions/barStates';
 import bubbleSort from './sortingAlgorithms/bubbleSort';
+import insertionSort from './sortingAlgorithms/insertionSort';
 
 let n = 0;
 // let _i = -1;
@@ -230,7 +231,16 @@ function App() {
         );
         break;
       case 'insertion_sort':
-        alert('implement inserstion sort');
+        if (isArraySorted() || isSorting) return;
+        disableUIElements();
+        insertionSort(
+          array,
+          arrayBars,
+          barValues,
+          sortingTimer,
+          finishSortArrayHelper,
+          hideShowValue,
+        );
         break;
       case 'selection_sort':
         alert('implement selection sort');
@@ -309,7 +319,9 @@ function App() {
                       backgroundColor: getColor(val.state),
                     }}
                     className="array-bar"
-                    key={val.idx}
+                    // key={val.idx}
+                    // eslint-disable-next-line react/no-array-index-key
+                    key={idx}
                   >
                     { setBarColor(idx) }
                     <span
@@ -338,7 +350,7 @@ function App() {
                     type="range"
                     min={minWidth}
                     max={maxWidth}
-                    defaultValue="2"
+                    defaultValue="26"
                   />
                 </div>
               </div>
