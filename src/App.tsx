@@ -11,6 +11,7 @@ import { Bar, ArrayBars } from './helperFunctions/ArrayBars';
 import barStates from './helperFunctions/barStates';
 import bubbleSort from './sortingAlgorithms/bubbleSort';
 import insertionSort from './sortingAlgorithms/insertionSort';
+import selectionSort from './sortingAlgorithms/selectionSort';
 
 let n = 0;
 // let _i = -1;
@@ -243,7 +244,16 @@ function App() {
         );
         break;
       case 'selection_sort':
-        alert('implement selection sort');
+        if (isArraySorted() || isSorting) return;
+        disableUIElements();
+        selectionSort(
+          array,
+          arrayBars,
+          barValues,
+          sortingTimer,
+          finishSortArrayHelper,
+          hideShowValue,
+        );
         break;
       case 'shell_sort':
         alert('implement shell sort');
