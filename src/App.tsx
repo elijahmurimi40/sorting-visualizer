@@ -3,6 +3,7 @@ import React, {
 } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import { Header, Label, Message } from 'semantic-ui-react';
+import BootstrapSwitchButton from 'bootstrap-switch-button-react';
 import './App.css';
 import TopNav from './ui/TopNav';
 import BottomNav from './ui/BottomNav';
@@ -22,6 +23,7 @@ let barHeight = 0;
 let debounceTimer: number = 0;
 let isSorting = false;
 let sortingTimer = 0;
+let isSliderChecked = false;
 
 const minWidth = 2;
 const maxWidth = 50;
@@ -88,6 +90,8 @@ function App() {
   const select = useRef<HTMLSelectElement>(null);
   const arrayBars = useRef<Array<HTMLDivElement>>([]);
   const barValues = useRef<Array<HTMLSpanElement>>([]);
+  const arraySizeSpeed = useRef<HTMLDivElement>(null);
+  const finishButton = useRef<HTMLAnchorElement>(null);
 
   const sliderValue = useRef(() => { });
   const calculateAndSetDimension = useRef(() => { });
@@ -96,11 +100,36 @@ function App() {
   const [array, setArray] = useState<ArrayBars>([]);
   const [showMessage, setShowMessage] = useState(false as boolean);
 
-  const topNavHeight = () => topNav.current!!.clientHeight;
+  // after adding dark mode switch
+  // const topNavHeight = () => topNav.current!!.clientHeight;
   const bottomNavHeight = () => bottomNav.current!!.clientHeight;
   const containerTopMargin = () => container.current!!.offsetTop;
   const holderDivWidth = () => holderDiv.current!!.clientWidth;
   const buttomSectionHeight = () => buttomSection.current!!.clientHeight;
+
+  const darkModeToggle = (checked: boolean) => {
+    isSliderChecked = checked;
+    const isChecked = checked;
+    if (isChecked) {
+      document.body.style.backgroundColor = '#1b1c1d';
+      arraySizeSpeed.current!!.style.color = '#ffffff';
+      finishButton.current!!.classList.remove('secondary');
+      finishButton.current!!.classList.add('standard');
+      topNav.current!!.classList.add('inverted');
+      topNav.current!!.style.borderBottom = '1px solid #767676';
+      bottomNav.current!!.classList.add('inverted');
+      bottomNav.current!!.style.borderTop = '1px solid #767676';
+    } else {
+      document.body.style.backgroundColor = '#ffffff';
+      arraySizeSpeed.current!!.style.color = '#000000';
+      finishButton.current!!.classList.remove('standard');
+      finishButton.current!!.classList.add('secondary');
+      topNav.current!!.classList.remove('inverted');
+      topNav.current!!.style.border = '1px solid rgba(34, 36, 38, .15)';
+      bottomNav.current!!.classList.remove('inverted');
+      bottomNav.current!!.style.border = '1px solid rgba(34, 36, 38, .15)';
+    }
+  };
 
   const generateArray = async (size: number) => {
     show(loadingIndicator.current!!);
@@ -167,21 +196,23 @@ function App() {
   calculateAndSetDimension.current = () => {
     stopSortTimers();
     const windowHeight = window.innerHeight;
-    const topNavHeightVal = topNavHeight();
+    // after adding dark mode switch
+    // const topNavHeightVal = topNavHeight();
     const bottomNavVal = bottomNavHeight();
     const containerTopMarginVal = containerTopMargin();
 
     // calculate the remaining window height to show bars
     const remainingWindowHeight = windowHeight - containerTopMarginVal;
-    const spaceBetweenTopNavAndContainerOffset = containerTopMarginVal - topNavHeightVal;
-    const height = remainingWindowHeight - spaceBetweenTopNavAndContainerOffset - bottomNavVal;
+    // const spaceBetweenTopNavAndContainerOffset = containerTopMarginVal - topNavHeightVal;
+    // minus for bottom margin
+    const height = remainingWindowHeight - bottomNavVal - 20;
 
     setContainerHeight!!(height);
 
     // holder div containing the bars and calculating the maximum bar height
     holderDivWidthVal = holderDivWidth();
     const buttomSectionHeightVal = buttomSectionHeight();
-    barHeight = height - buttomSectionHeightVal - 10;
+    barHeight = height - buttomSectionHeightVal - 20;
 
     /*
       calculating the number of random bars to generate according to the available width
@@ -302,6 +333,19 @@ function App() {
           topNav, generateNewArray: generateArrayOnClick, sortArray, select,
         }}
       </TopNav>
+      <div className="dark-mode">
+        <BootstrapSwitchButton
+          checked={isSliderChecked}
+          width={110}
+          onlabel="Dark Mode"
+          onstyle="dark"
+          offlabel="Light mode"
+          offstyle="primary"
+          // eslint-disable-next-line react/style-prop-object
+          style="border"
+          onChange={(checked: boolean) => { darkModeToggle(checked); }}
+        />
+      </div>
       <Container
         className="container"
         style={{ height: containerHeight }}
@@ -346,6 +390,7 @@ function App() {
               <div ref={buttomSection}>
                 <div className="finish-button">
                   <a
+                    ref={finishButton}
                     href="/finish"
                     onClick={finishSortArray}
                     className="ui secondary submit button inverted"
@@ -353,7 +398,7 @@ function App() {
                     Finish
                   </a>
                 </div>
-                <div>Change Array Size and Sorting Speed</div>
+                <div ref={arraySizeSpeed}>Change Array Size and Sorting Speed</div>
                 <div>
                   <input
                     ref={slider}
