@@ -13,6 +13,7 @@ import barStates from './helperFunctions/barStates';
 import bubbleSort from './sortingAlgorithms/bubbleSort';
 import insertionSort from './sortingAlgorithms/insertionSort';
 import selectionSort from './sortingAlgorithms/selectionSort';
+import shellSort from './sortingAlgorithms/shellSort';
 
 let n = 0;
 // let _i = -1;
@@ -287,7 +288,16 @@ function App() {
         );
         break;
       case 'shell_sort':
-        alert('implement shell sort');
+        if (isArraySorted() || isSorting) return;
+        disableUIElements();
+        shellSort(
+          array,
+          arrayBars,
+          barValues,
+          sortingTimer,
+          finishSortArrayHelper,
+          hideShowValue,
+        );
         break;
       case 'merge_sort':
         alert('implement merge sort');
@@ -377,7 +387,7 @@ function App() {
                     // eslint-disable-next-line react/no-array-index-key
                     key={idx}
                   >
-                    { setBarColor(idx) }
+                    {setBarColor(idx)}
                     <span
                       ref={(element: HTMLSpanElement) => { barValues.current[val.idx] = element; }}
                       className="span-value text-align"
