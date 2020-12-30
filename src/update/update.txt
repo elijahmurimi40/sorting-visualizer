@@ -1,5 +1,4 @@
 --- async function 'App.tsx'
 --- update to remove setTimeOut in componentDidUnMount 'whole app'
 --- also when sorting using js inbuild methods check for any 'App.tsx'
---- add more algorithms
---- selection sort test failing because of different index
+--- add more algorithms ---
