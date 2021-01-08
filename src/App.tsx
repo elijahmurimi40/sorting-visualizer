@@ -14,6 +14,8 @@ import bubbleSort from './sortingAlgorithms/bubbleSort';
 import insertionSort from './sortingAlgorithms/insertionSort';
 import selectionSort from './sortingAlgorithms/selectionSort';
 import shellSort from './sortingAlgorithms/shellSort';
+import mergeSort, { animate } from './sortingAlgorithms/mergeSort';
+import { quickSort, animateQuickSort } from './sortingAlgorithms/quickSort';
 
 let n = 0;
 // let _i = -1;
@@ -250,6 +252,7 @@ function App() {
   const sortArray = (e: MouseEvent, key: string) => {
     e.preventDefault();
     let timer = 0;
+    let animations = [];
     switch (key) {
       case 'bubble_sort':
         if (isArraySorted() || isSorting) return;
@@ -268,6 +271,32 @@ function App() {
         disableUIElements();
         insertionSort(
           array,
+          arrayBars,
+          barValues,
+          sortingTimer,
+          finishSortArrayHelper,
+          hideShowValue,
+        );
+        break;
+      case 'merge_sort':
+        if (isArraySorted() || isSorting) return;
+        disableUIElements();
+        animations = mergeSort(array, sortingTimer);
+        animate(
+          animations,
+          arrayBars,
+          barValues,
+          sortingTimer,
+          finishSortArrayHelper,
+          hideShowValue,
+        );
+        break;
+      case 'quick_sort':
+        if (isArraySorted() || isSorting) return;
+        disableUIElements();
+        animations = quickSort(array, sortingTimer);
+        animateQuickSort(
+          animations,
           arrayBars,
           barValues,
           sortingTimer,
@@ -298,12 +327,6 @@ function App() {
           finishSortArrayHelper,
           hideShowValue,
         );
-        break;
-      case 'merge_sort':
-        alert('implement merge sort');
-        break;
-      case 'quick_sort':
-        alert('implement quick sort');
         break;
       default:
         setShowMessage!!(true);
