@@ -2,6 +2,8 @@
 
 This project is a Web Visualization tool for sorting algorithms.
 
+[https://fortie40.github.io/sorting-visualizer/](https://fortie40.github.io/sorting-visualizer/)
+
 ## License
 
 MIT License
