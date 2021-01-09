@@ -24,6 +24,7 @@
         "react-hooks"
     ],
     "rules": {
+        "linebreak-style": ["error", "windows"],
         "react/jsx-filename-extension": [
             2,
             {
