@@ -14,7 +14,7 @@ function Title(props: Props) {
 
   return (
     <>
-      <Menu.Item href="/sorting-visualizer" header>Sorting Visualizer</Menu.Item>
+      <Menu.Item href="/" header>Sorting Visualizer</Menu.Item>
       <a className="item" href="/generate-new-array" onClick={generateNewArray}>Generate New Array</a>
     </>
   );
