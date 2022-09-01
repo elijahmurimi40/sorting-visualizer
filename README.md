@@ -4,6 +4,11 @@ This project is a Web Visualization tool for sorting algorithms.
 
 [https://elijahmurimi40.github.io/sorting-visualizer/](https://elijahmurimi40.github.io/sorting-visualizer/)
 
+### Demo
+<img 
+	src="demo/sv40.gif" 
+	alt="Demo" hspace="20" />
+
 ## License
 
 MIT License
