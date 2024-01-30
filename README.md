@@ -2,7 +2,7 @@
 
 This project is a Web Visualization tool for sorting algorithms.
 
-[https://elijahmurimi40.github.io/sorting-visualizer/](https://elijahmurimi40.github.io/sorting-visualizer/)
+[https://sv.elijahmurimi.dev](https://sv.elijahmurimi.dev)
 
 ### Demo
 <img 
