@@ -8,6 +8,7 @@ import comparisonSortingAlgorithmOptions from '../sortingAlgorithms/sortingAlgor
 
 type Props = {
   children: {
+    topNavParent: RefObject<HTMLDivElement> | null,
     topNav: RefObject<HTMLDivElement> | null,
     // eslint-disable-next-line no-unused-vars
     generateNewArray: (e: MouseEvent) => void,
@@ -23,7 +24,7 @@ function TopNav(props: Props) {
 
   const { children } = props;
   const {
-    topNav, generateNewArray, sortArray, select,
+    topNavParent, topNav, generateNewArray, sortArray, select,
   } = children;
   // const { topNav, generateNewArray, sortArray } = props.children;
   const options = [];
@@ -43,37 +44,51 @@ function TopNav(props: Props) {
   }
 
   return (
-    <div className="ui menu" ref={topNav}>
-      <span className="show-for-large">
-        <Nav>{{ generateNewArray }}</Nav>
-      </span>
+    <div
+      ref={topNavParent}
+      className="ui menu"
+    >
+      <div
+        className="ui menu"
+        ref={topNav}
+        style={{
+          border: '1px solid transparent',
+          width: '1140px',
+          maxWidth: '1500px',
+          margin: '0 auto',
+        }}
+      >
+        <span className="show-for-large">
+          <Nav>{{ generateNewArray }}</Nav>
+        </span>
 
-      <Menu.Item>
-        {/* <select style={{ padding: '5px 5px' }} name='sorting_algorithms'
-          className='ui selection dropdown'
-        > */}
-        <select
-          ref={select}
-          style={{ padding: '5px 5px' }}
-          name="sorting_algorithms"
-          className="ui selection fluid dropdown"
-          defaultValue=""
-          onChange={getAndSetValue}
-        >
-          <option value="" disabled>Select Sorting Algorithm</option>
-          {options}
-        </select>
-      </Menu.Item>
+        <Menu.Item>
+          {/* <select style={{ padding: '5px 5px' }} name='sorting_algorithms'
+            className='ui selection dropdown'
+          > */}
+          <select
+            ref={select}
+            style={{ padding: '5px 5px' }}
+            name="sorting_algorithms"
+            className="ui selection fluid dropdown"
+            defaultValue=""
+            onChange={getAndSetValue}
+          >
+            <option value="" disabled>Select Sorting Algorithm</option>
+            {options}
+          </select>
+        </Menu.Item>
 
-      <Menu.Item>
-        <a
-          href="/sort"
-          className="ui fluid blue submit button"
-          onClick={(event) => sortArray(event, value!!)}
-        >
-          Sort
-        </a>
-      </Menu.Item>
+        <Menu.Item>
+          <a
+            href="/sort"
+            className="ui fluid blue submit button"
+            onClick={(event) => sortArray(event, value!!)}
+          >
+            Sort
+          </a>
+        </Menu.Item>
+      </div>
     </div>
   );
 }

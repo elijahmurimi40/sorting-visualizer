@@ -83,6 +83,7 @@ const getColor = (state: string) => {
 };
 
 function App() {
+  const topNavParent = useRef<HTMLDivElement>(null);
   const topNav = useRef<HTMLDivElement>(null);
   const bottomNav = useRef<HTMLDivElement>(null);
   const container = useRef<HTMLDivElement>(null);
@@ -119,7 +120,9 @@ function App() {
       finishButton.current!!.classList.remove('secondary');
       finishButton.current!!.classList.add('standard');
       topNav.current!!.classList.add('inverted');
-      topNav.current!!.style.borderBottom = '1px solid #767676';
+      topNavParent.current!!.classList.add('inverted');
+      topNavParent.current!!.style.borderBottom = '1px solid #767676';
+      topNav.current!!.style.borderLeft = '1px solid #2d2e2f';
       bottomNav.current!!.classList.add('inverted');
       bottomNav.current!!.style.borderTop = '1px solid #767676';
     } else {
@@ -128,7 +131,9 @@ function App() {
       finishButton.current!!.classList.remove('standard');
       finishButton.current!!.classList.add('secondary');
       topNav.current!!.classList.remove('inverted');
-      topNav.current!!.style.border = '1px solid rgba(34, 36, 38, .15)';
+      topNavParent.current!!.classList.remove('inverted');
+      topNavParent.current!!.style.border = '1px solid rgba(34, 36, 38, .15)';
+      topNav.current!!.style.borderLeft = '1px solid #e8e9e9';
       bottomNav.current!!.classList.remove('inverted');
       bottomNav.current!!.style.border = '1px solid rgba(34, 36, 38, .15)';
     }
@@ -363,7 +368,7 @@ function App() {
     <div>
       <TopNav>
         {{
-          topNav, generateNewArray: generateArrayOnClick, sortArray, select,
+          topNavParent, topNav, generateNewArray: generateArrayOnClick, sortArray, select,
         }}
       </TopNav>
       <div className="dark-mode">
