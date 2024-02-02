@@ -1,7 +1,7 @@
 import React, {
   RefObject, MouseEvent, useState, ChangeEvent,
 } from 'react';
-import { Menu } from 'semantic-ui-react';
+import { Menu, MenuMenu } from 'semantic-ui-react';
 import Nav from './Nav';
 import './TopNav.css';
 import comparisonSortingAlgorithmOptions from '../sortingAlgorithms/sortingAlgorithmOptions';
@@ -79,15 +79,17 @@ function TopNav(props: Props) {
           </select>
         </Menu.Item>
 
-        <Menu.Item>
-          <a
-            href="/sort"
-            className="ui fluid blue submit button"
-            onClick={(event) => sortArray(event, value!!)}
-          >
-            Sort
-          </a>
-        </Menu.Item>
+        <MenuMenu position="right">
+          <Menu.Item>
+            <a
+              href="/sort"
+              className="ui fluid blue submit button"
+              onClick={(event) => sortArray(event, value!!)}
+            >
+              Sort
+            </a>
+          </Menu.Item>
+        </MenuMenu>
       </div>
     </div>
   );
