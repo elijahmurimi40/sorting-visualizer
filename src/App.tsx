@@ -466,11 +466,16 @@ function App() {
         aria-live="polite"
         aria-atomic="true"
         style={{
-          position: 'relative',
+          position: 'fixed',
+          top: 0,
+          right: 0,
+          left: 0,
+          width: '305px',
+          margin: '0 auto',
           display: showMessage ? 'block' : 'none',
         }}
       >
-        <div style={{ position: 'absolute', bottom: 0, right: 0 }}>
+        <div>
           {
             (showMessage)
           }
