@@ -123,6 +123,7 @@ function App() {
       topNavParent.current!!.classList.add('inverted');
       topNavParent.current!!.style.borderBottom = '1px solid #767676';
       topNav.current!!.style.borderLeft = '1px solid #2d2e2f';
+      topNav.current!!.style.borderRight = '1px solid #2d2e2f';
       bottomNav.current!!.classList.add('inverted');
       bottomNav.current!!.style.borderTop = '1px solid #767676';
     } else {
@@ -134,6 +135,7 @@ function App() {
       topNavParent.current!!.classList.remove('inverted');
       topNavParent.current!!.style.border = '1px solid rgba(34, 36, 38, .15)';
       topNav.current!!.style.borderLeft = '1px solid #e8e9e9';
+      topNav.current!!.style.borderRight = '1px solid #e8e9e9';
       bottomNav.current!!.classList.remove('inverted');
       bottomNav.current!!.style.border = '1px solid rgba(34, 36, 38, .15)';
     }
