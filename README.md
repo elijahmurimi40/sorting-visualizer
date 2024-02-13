@@ -2,13 +2,28 @@
 
 This project is a Web Visualization tool for sorting algorithms.
 
-[https://sv.elijahmurimi.dev](https://sv.elijahmurimi.dev)
+I created a sorting algorithm visualizer to bridge the gap between theoretical understanding and practical application. The project allowed me to deepen my grasp of complex algorithms, improve programming skills, and offer an interactive learning tool for others. I hope that you enjoy playing around with this visualization tool just as much as I enjoyed building it
+
+Dive into the world of sorting algorithms through this interactive visualizer. [https://sv.elijahmurimi.dev](https://sv.elijahmurimi.dev)
 
 ### Demo
 <img 
 	src="demo/sv40.gif" 
 	alt="Demo" hspace="20" />
 
+ ## Local setup.
+ Before diving in, ensure you have Nodejs installed and yarn as your package manager for a seamless setup of the Sorting Algorithm Visualizer. `npm` can also be used. Running the Sorting Algorithm Visualizer locally, first clone the repository.
+
+ 	git clone https://github.com/elijahmurimi40/sorting-visualizer.git
+
+  To install all the dependencies of the project.
+
+  	yarn
+Then
+
+	yarn start
+
+ Have fun.
 ## License
 
 MIT License
