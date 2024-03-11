@@ -96,13 +96,21 @@ function App() {
   const barValues = useRef<Array<HTMLSpanElement>>([]);
   const arraySizeSpeed = useRef<HTMLDivElement>(null);
   const finishButton = useRef<HTMLAnchorElement>(null);
+  const messageDiv = useRef<HTMLDivElement>(null);
 
   const sliderValue = useRef(() => { });
   const calculateAndSetDimension = useRef(() => { });
 
   const [containerHeight, setContainerHeight] = useState(0);
   const [array, setArray] = useState<ArrayBars>([]);
-  const [showMessage, setShowMessage] = useState(false as boolean);
+  // const [showMessage, setShowMessage] = useState(false as boolean);
+  let timer = 0;
+  let showMessage = false;
+  const setShowMessage = (showMsg: boolean) => {
+    messageDiv.current!!.style.display = 'none';
+    showMessage = showMsg;
+    clearTimeout(timer);
+  };
 
   // after adding dark mode switch
   // const topNavHeight = () => topNav.current!!.clientHeight;
@@ -248,17 +256,19 @@ function App() {
     stopSortTimers();
     enableUIElements();
     restoreArrayBars(arr);
+    setArray(arr);
   };
 
   const finishSortArray = (e: MouseEvent) => {
     e.preventDefault();
+    if (isArraySorted()) return;
     const arr = array.slice().sort((a: Bar, b: Bar) => a.value - b.value);
     finishSortArrayHelper(arr);
   };
 
   const sortArray = (e: MouseEvent, key: string) => {
     e.preventDefault();
-    let timer = 0;
+    // let timer = 0;
     let animations = [];
     switch (key) {
       case 'bubble_sort':
@@ -337,7 +347,10 @@ function App() {
         break;
       default:
         setShowMessage!!(true);
+        messageDiv.current!!.style.display = 'block';
+        clearTimeout(timer);
         timer = window.setTimeout(() => {
+        messageDiv.current!!.style.display = 'none';
           setShowMessage!!(false);
           clearTimeout(timer);
         }, 3000);
@@ -465,6 +478,7 @@ function App() {
       </div>
 
       <div
+        ref={messageDiv}
         aria-live="polite"
         aria-atomic="true"
         style={{
