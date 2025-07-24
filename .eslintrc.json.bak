@@ -24,7 +24,7 @@
         "react-hooks"
     ],
     "rules": {
-        "linebreak-style": "off",
+        "linebreak-style": ["error", "windows,unix"],
         "react/jsx-filename-extension": [
             2,
             {
@@ -59,7 +59,7 @@
         "import/resolver": {
             "typescript": {
                 "alwaysTryTypes": true,
-                "project": "./tsconfig.json"
+                "project": "C:/xampp/htdocs/projects/sorting-visualizer/tsconfig.json"
             }
         }
     }
