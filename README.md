@@ -12,7 +12,7 @@ Dive into the world of sorting algorithms through this interactive visualizer. [
 	alt="Demo" hspace="20" />
 
  ## Local setup.
- Before diving in, ensure you have Nodejs installed and yarn as your package manager for a seamless setup of the Sorting Algorithm Visualizer. `npm` can also be used. Running the Sorting Algorithm Visualizer locally, first clone the repository.
+ Before diving in, ensure you have Nodejs installed and yarn as your package manager for a seamless setup of the Sorting Algorithm Visualizer. `npm` can also be used. Running the Sorting Algorithm Visualizer locally, first clone the repository. This project uses `node version 16`.
 
  	git clone https://github.com/elijahmurimi40/sorting-visualizer.git
 
